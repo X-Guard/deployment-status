@@ -1679,7 +1679,7 @@ function sendMessage(webhookUrl, args) {
                 type: 'context',
                 elements: [{
                         type: 'image',
-                        image_url: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png',
+                        image_url: 'https://slack.github.com/static/img/favicon-neutral.png',
                         alt_text: 'Github'
                     }, {
                         type: 'mrkdwn',
@@ -1692,14 +1692,12 @@ function sendMessage(webhookUrl, args) {
             getInfoSection(),
             getContextSection()
         ];
-        const message = {
+        yield ax.post(webhookUrl, {
             attachments: [{
                     color,
                     blocks
                 }]
-        };
-        console.log(JSON.stringify(message));
-        yield ax.post(webhookUrl, message);
+        });
     });
 }
 exports.sendMessage = sendMessage;

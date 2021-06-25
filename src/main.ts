@@ -97,7 +97,7 @@ export async function sendMessage(webhookUrl: string, args: MessageArgs) {
       type: 'context',
       elements: [{
         type: 'image',
-        image_url: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png',
+        image_url: 'https://slack.github.com/static/img/favicon-neutral.png',
         alt_text: 'Github'
       }, {
         type: 'mrkdwn',

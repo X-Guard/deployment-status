@@ -3230,13 +3230,14 @@ function run() {
             const logUrl = core.getInput("log_url", { required: false }) || core.getInput("target_url", { required: false }) || defaultLogUrl;
             const description = core.getInput("description", { required: false }) || "";
             const usrDeploymentId = core.getInput("deployment_id");
+            const environment = core.getInput("environment", { required: false });
             const environmentUrl = core.getInput("environment_url", { required: false }) || "";
             const state = core.getInput("state");
             const client = new github.GitHub(token, { previews: ["flash", "ant-man"] });
             const deploymentId = usrDeploymentId
                 ? parseInt(usrDeploymentId)
                 : hashCode(context.sha);
-            yield client.repos.createDeploymentStatus(Object.assign({}, context.repo, { deployment_id: deploymentId, state, log_url: logUrl, description, environment_url: environmentUrl }));
+            yield client.repos.createDeploymentStatus(Object.assign({}, context.repo, { deployment_id: deploymentId, state, log_url: logUrl, description, environment: environment || undefined, environment_url: environmentUrl }));
         }
         catch (error) {
             core.error(error);

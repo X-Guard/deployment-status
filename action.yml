@@ -17,6 +17,9 @@ inputs:
   target_url:
     description: "Same as log_url"
     required: false
+  environment:
+    description: "String identifying the environment of the deployment"
+    required: false
   environment_url:
     description: "Sets the URL for accessing your environment"
     required: false
@@ -25,7 +28,7 @@ inputs:
     required: false
   deployment_id:
     description: "The ID of the deployment"
-    required: true
+    required: false
 runs:
   using: "node12"
   main: "dist/index.js"

@@ -1,6 +1,11 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 
+type Deployment =
+  | "production"
+  | "staging"
+  | "qa"
+
 type DeploymentState =
   | "error"
   | "failure"
@@ -34,6 +39,7 @@ async function run() {
     const logUrl = core.getInput("log_url", { required: false }) || core.getInput("target_url", { required: false }) || defaultLogUrl;
     const description = core.getInput("description", { required: false }) || "";
     const usrDeploymentId = core.getInput("deployment_id");
+    const environment = core.getInput("environment", { required: false }) as Deployment;
     const environmentUrl = core.getInput("environment_url", { required: false }) || "";
     const state = core.getInput("state") as DeploymentState;
 
@@ -49,6 +55,7 @@ async function run() {
       state,
       log_url: logUrl,
       description,
+      environment: environment || undefined,
       environment_url: environmentUrl,
     });
   } catch (error) {

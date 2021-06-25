@@ -112,16 +112,12 @@ export async function sendMessage(webhookUrl: string, args: MessageArgs) {
     getContextSection()
   ]
 
-  const message = {
+  await ax.post(webhookUrl, {
     attachments: [{
       color,
       blocks
     }]
-  }
-
-  console.log(JSON.stringify(message));
-
-  await ax.post(webhookUrl, message)
+  });
 }
 
 

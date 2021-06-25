@@ -1,33 +1,27 @@
-name: "Deployment Status"
-description: "Creates a GitHub Deployment status update"
-author: "chrnorm"
+name: "DeploymentEnv Status"
+description: "Pushes a slack message"
+author: "XGManuelJager"
 branding:
   icon: arrow-up
   color: gray-dark
 inputs:
-  state:
-    description: "State for the deployment"
+  webhook_url:
+    description: "Slack webhook url to send messages to"
     required: true
-  token:
-    description: "Github repository token"
+  env:
+    description: "environment of the deployment"
     required: true
-  log_url:
-    description: "Sets the URL for deployment output"
+  env_url:
+    description: "url of the deployment"
     required: false
-  target_url:
-    description: "Same as log_url"
-    required: false
-  environment:
-    description: "String identifying the environment of the deployment"
-    required: false
-  environment_url:
-    description: "Sets the URL for accessing your environment"
-    required: false
-  description:
-    description: "Descriptive message about the deployment"
-    required: false
-  deployment_id:
-    description: "The ID of the deployment"
+  failure:
+    description: "Only pass in ${{ failure() }}"
+    required: true
+  success:
+    description: "Only pass in ${{ success() }}"
+    required: true
+  dashboard_url:
+    description: "url of the dashboard"
     required: false
 runs:
   using: "node12"

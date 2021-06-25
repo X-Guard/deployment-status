@@ -10,19 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - uses: ./
-        name: Create GitHub deployment
-        id: deployment
-        with:
-          token: "${{ github.token }}"
-          environment_url: http://my-app-url.com
-          environment: production
-          deployment_id: 1
-
       - name: Update deployment status
         uses: ./
         with:
-          token: "${{ github.token }}"
-          environment_url: http://my-app-url.com
-          state: "success"
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          webhook_url: "${{ secrets.SLACK_DEPLOYMENT_WEBHOOK }}"
+          env: production
+          env_url: http://my-app-url.com
+          failure: "${{ failure() }}"
+          success: "${{ success() }}"

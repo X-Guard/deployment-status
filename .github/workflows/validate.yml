@@ -18,3 +18,12 @@ jobs:
           env: production
           env_url: http://my-app-url.com
           state: success
+
+      - name: Update deployment status
+        uses: ./
+        if: failure()
+        with:
+          webhook_url: ${{ secrets.SLACK_DEPLOYMENT_WEBHOOK }}
+          env: production
+          env_url: http://my-app-url.com
+          state: failure

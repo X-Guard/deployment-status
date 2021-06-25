@@ -15,13 +15,14 @@ jobs:
         id: deployment
         with:
           token: "${{ github.token }}"
-          target_url: http://my-app-url.com
+          environment_url: http://my-app-url.com
           environment: production
+          deployment_id: 1
 
       - name: Update deployment status
         uses: ./
         with:
           token: "${{ github.token }}"
-          target_url: http://my-app-url.com
+          environment_url: http://my-app-url.com
           state: "success"
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}

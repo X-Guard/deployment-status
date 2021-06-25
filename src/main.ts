@@ -10,6 +10,21 @@ type DeploymentState =
   | "pending"
   | "success";
 
+function hashCode(str: string): number {
+  let hash: number = 0;
+  let chr: number;
+
+  if (str.length === 0) return hash;
+
+  for (let i = 0; i < str.length; i++) {
+    chr = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+
+  return hash;
+}
+
 async function run() {
   try {
     const context = github.context;
@@ -18,16 +33,19 @@ async function run() {
     const token = core.getInput("token", { required: true });
     const logUrl = core.getInput("log_url", { required: false }) || core.getInput("target_url", { required: false }) || defaultLogUrl;
     const description = core.getInput("description", { required: false }) || "";
-    const deploymentId = core.getInput("deployment_id");
-    const environmentUrl =
-      core.getInput("environment_url", { required: false }) || "";
+    const usrDeploymentId = core.getInput("deployment_id");
+    const environmentUrl = core.getInput("environment_url", { required: false }) || "";
     const state = core.getInput("state") as DeploymentState;
 
     const client = new github.GitHub(token, { previews: ["flash", "ant-man"] });
 
+    const deploymentId = usrDeploymentId
+        ? parseInt(usrDeploymentId)
+        : hashCode(context.sha)
+
     await client.repos.createDeploymentStatus({
       ...context.repo,
-      deployment_id: parseInt(deploymentId),
+      deployment_id: deploymentId,
       state,
       log_url: logUrl,
       description,

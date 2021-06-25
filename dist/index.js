@@ -3241,7 +3241,7 @@ function run() {
         }
         catch (error) {
             core.error(error);
-            core.setFailed(JSON.stringify(error));
+            core.setFailed(JSON.stringify(error, null, 2));
         }
     });
 }

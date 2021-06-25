@@ -1,4 +1,5 @@
 __tests__/runner/*
+secrets.js
 
 # Rest pulled from https://github.com/github/gitignore/blob/master/Node.gitignore
 # Logs

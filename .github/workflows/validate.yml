@@ -10,18 +10,20 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - uses: chrnorm/deployment-action@releases/v1
-        name: Create GitHub deployment
-        id: deployment
+      - name: Update deployment status
+        uses: ./
+        if: success()
         with:
-          token: "${{ github.token }}"
-          target_url: http://my-app-url.com
-          environment: production
+          webhook_url: ${{ secrets.SLACK_DEPLOYMENT_WEBHOOK }}
+          env: production
+          env_url: http://my-app-url.com
+          state: success
 
       - name: Update deployment status
         uses: ./
+        if: failure()
         with:
-          token: "${{ github.token }}"
-          target_url: http://my-app-url.com
-          state: "success"
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          webhook_url: ${{ secrets.SLACK_DEPLOYMENT_WEBHOOK }}
+          env: production
+          env_url: http://my-app-url.com
+          state: failure

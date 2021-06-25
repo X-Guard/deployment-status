@@ -129,8 +129,6 @@ async function run() {
   try {
     const context = github.context;
 
-    console.log(JSON.stringify(context, null, 2));
-
     const webhook_url = core.getInput("webhook_url", { required: true });
     const state = core.getInput("state", { required: true }) as DeploymentState;
     const env = core.getInput("env", { required: true }) as DeploymentEnv;
@@ -154,9 +152,6 @@ async function run() {
       logUrl,
       dashboardUrl,
     }
-
-    console.log(JSON.stringify(args, null, 2));
-    return;
 
     await sendMessage(webhook_url, args)
 

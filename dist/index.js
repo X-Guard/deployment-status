@@ -1707,7 +1707,6 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const context = github.context;
-            console.log(JSON.stringify(context, null, 2));
             const webhook_url = core.getInput("webhook_url", { required: true });
             const state = core.getInput("state", { required: true });
             const env = core.getInput("env", { required: true });
@@ -1729,8 +1728,6 @@ function run() {
                 logUrl,
                 dashboardUrl,
             };
-            console.log(JSON.stringify(args, null, 2));
-            return;
             yield sendMessage(webhook_url, args);
         }
         catch (error) {

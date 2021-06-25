@@ -13,34 +13,59 @@ type DeploymentState =
   | "success"
   | "cancelled"
 
-function hashCode(str: string): number {
-  let hash: number = 0;
-  let chr: number;
-
-  if (str.length === 0) return hash;
-
-  for (let i = 0; i < str.length; i++) {
-    chr = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + chr;
-    hash |= 0; // Convert to 32bit integer
-  }
-
-  return hash;
-}
-
 export type MessageArgs = {
+  /**
+   * Environment of the service
+   */
   env: DeploymentEnv,
+
+  /**
+   * Actual url of the deployed service
+   */
   envUrl: string,
+
+  /**
+   * State of the deployment, either failed or succeeded
+   */
   state: DeploymentState,
+
+  /**
+   * Url of the source repository
+   */
   repoUrl: string,
+
+  /**
+   * Display name of the repository
+   */
   repoName: string,
+
+  /**
+   * Ref of the deployment
+   */
   refName: string,
+
+  /**
+   * Github url of the ref. Usually links to the commit that created the deployment
+   */
   refUrl: string,
+
+  /**
+   * Github checks of the deployments. From here, deployment action is visible
+   */
   logUrl?: string,
+
+  /**
+   * Url of dashboard of the deployed service. Usually a cloud run dashboard link
+   */
   dashboardUrl?: string,
 }
 
-function mrkdwn(message): object {
+/**
+ * Create a slack markdown section
+ *
+ * @param message
+ */
+function mrkdwn(message: string): object {
   return {
     type: "section",
     text: {
@@ -50,8 +75,15 @@ function mrkdwn(message): object {
   }
 }
 
+/**
+ * Sends a formatted message to a slack channel using the given webhook url
+ *
+ * @param webhookUrl - Secret Slack webhook url
+ * @param args - Arguments to format the message
+ */
 export async function sendMessage(webhookUrl: string, args: MessageArgs) {
 
+  // Color for the main attachment. Used to show the deployment state. Defaults to grey if undefined
   let color: string | undefined;
 
   function getMainSection() {

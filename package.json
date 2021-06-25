@@ -5,7 +5,7 @@
   "description": "GitHub action to update deployment status",
   "main": "lib/main.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run pack",
     "test": "jest",
     "pack": "./node_modules/.bin/ncc build"
   },

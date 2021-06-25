@@ -3232,7 +3232,7 @@ function run() {
             const usrDeploymentId = core.getInput("deployment_id");
             const environment = core.getInput("environment", { required: false });
             const environmentUrl = core.getInput("environment_url", { required: false }) || "";
-            const state = core.getInput("state");
+            const state = (core.getInput("state") || "in_progress");
             const client = new github.GitHub(token, { previews: ["flash", "ant-man"] });
             const deploymentId = usrDeploymentId
                 ? parseInt(usrDeploymentId)

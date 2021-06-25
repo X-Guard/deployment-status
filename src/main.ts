@@ -41,7 +41,7 @@ async function run() {
     const usrDeploymentId = core.getInput("deployment_id");
     const environment = core.getInput("environment", { required: false }) as Deployment;
     const environmentUrl = core.getInput("environment_url", { required: false }) || "";
-    const state = core.getInput("state") as DeploymentState;
+    const state = (core.getInput("state") || "in_progress") as DeploymentState;
 
     const client = new github.GitHub(token, { previews: ["flash", "ant-man"] });
 

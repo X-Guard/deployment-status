@@ -60,7 +60,7 @@ async function run() {
     });
   } catch (error) {
     core.error(error);
-    core.setFailed(error);
+    core.setFailed(JSON.stringify(error));
   }
 }
 

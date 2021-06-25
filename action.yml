@@ -14,11 +14,8 @@ inputs:
   env_url:
     description: "url of the deployment"
     required: false
-  failure:
-    description: "Only pass in ${{ failure() }}"
-    required: true
-  success:
-    description: "Only pass in ${{ success() }}"
+  state:
+    description: "Workflow state. Enum: success | failure | cancelled"
     required: true
   dashboard_url:
     description: "url of the dashboard"

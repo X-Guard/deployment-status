@@ -12,9 +12,9 @@ jobs:
 
       - name: Update deployment status
         uses: ./
+        if: success()
         with:
           webhook_url: ${{ secrets.SLACK_DEPLOYMENT_WEBHOOK }}
           env: production
           env_url: http://my-app-url.com
-          failure: ${{ failure() }}
-          success: ${{ success() }}
+          state: success

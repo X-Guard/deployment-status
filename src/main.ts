@@ -130,13 +130,10 @@ async function run() {
     const context = github.context;
 
     const webhook_url = core.getInput("webhook_url", { required: true });
-    const failure = core.getInput("failure", { required: true });
-    const success = core.getInput("success", { required: true });
+    const state = core.getInput("state", { required: true }) as DeploymentState;
     const env = core.getInput("env", { required: true }) as DeploymentEnv;
     const envUrl = core.getInput("env_url", { required: false });
     const dashboardUrl = core.getInput("dashboard_url", { required: false });
-
-    const state: DeploymentState = failure ? "failure" : success ? "success" : "cancelled";
 
     const repoName = context.repo.repo;
     const repoUrl = `https://github.com/${context.repo.owner}/${repoName}`;

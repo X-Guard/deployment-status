@@ -89,7 +89,7 @@ export async function sendMessage(webhookUrl: string, args: MessageArgs) {
   function getMainSection() {
     switch (args.state) {
       case 'success':
-        color = '#219e46'
+        color = '#28d4d9'
         return mrkdwn(`Successfully deployed *${args.repoName}* to <${args.envUrl}|${args.env} environment>`);
       case 'failure':
         color = '#ff343f'

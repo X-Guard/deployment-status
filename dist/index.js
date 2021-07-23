@@ -1618,18 +1618,11 @@ const core = __importStar(__webpack_require__(470));
 const github = __importStar(__webpack_require__(469));
 const axios_1 = __importDefault(__webpack_require__(53));
 const ax = axios_1.default.create();
-function hashCode(str) {
-    let hash = 0;
-    let chr;
-    if (str.length === 0)
-        return hash;
-    for (let i = 0; i < str.length; i++) {
-        chr = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + chr;
-        hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
-}
+/**
+ * Create a slack markdown section
+ *
+ * @param message
+ */
 function mrkdwn(message) {
     return {
         type: "section",
@@ -1639,13 +1632,20 @@ function mrkdwn(message) {
         }
     };
 }
+/**
+ * Sends a formatted message to a slack channel using the given webhook url
+ *
+ * @param webhookUrl - Secret Slack webhook url
+ * @param args - Arguments to format the message
+ */
 function sendMessage(webhookUrl, args) {
     return __awaiter(this, void 0, void 0, function* () {
+        // Color for the main attachment. Used to show the deployment state. Defaults to grey if undefined
         let color;
         function getMainSection() {
             switch (args.state) {
                 case 'success':
-                    color = '#219e46';
+                    color = '#28d4d9';
                     return mrkdwn(`Successfully deployed *${args.repoName}* to <${args.envUrl}|${args.env} environment>`);
                 case 'failure':
                     color = '#ff343f';
